@@ -2,11 +2,6 @@
 
 REALLY JUST make minimum environment for Vim script.
 
-#Install
-Use `pip`.
-
-`pip install vimix`
-
 #Require
 
 `vimix` requires python3.3+

@@ -12,25 +12,25 @@ sys.path.append(vimix_dir)
 from vimix.vimix import vimix
 
 class vimixTest(unittest.TestCase):
-    def setUp(self):
-        self.project = 'hoge'
-        self.project_dir = 'vim-hoge'
-        self.autoload_path, self.doc_path, self.plugin_path = \
-                {d: os.path.join(os.path.dirname(__file__), self.project_dir, d) for d in ['autoload', 'doc', 'plugin']}
 
-    def test_vimix(self):
-        """ run vimix function """
+    def test_dirs_and_files_exists(self):
+        ''' run vimix '''
 
-        vimix(self.project)
-        self.assertTrue(os.path.exists(os.path.join(self.project_dir, self.autoload_path)))
-        self.assertTrue(os.path.exists(os.path.join(self.project_dir, self.doc_path)))
-        self.assertTrue(os.path.exists(os.path.join(self.project_dir, self.plugin_path)))
+        project = 'hoge'
+        project_dir = 'vim-hoge'
+        autoload_path, doc_path, plugin_path = \
+                {d: os.path.join(os.path.dirname(__file__), project_dir, d) for d in ['autoload', 'doc', 'plugin']}
+        vimix(project)
 
-        self.assertTrue(os.path.isfile(os.path.join(self.project_dir, self.autoload_path, '{}.vim'.format(self.project))))
-        self.assertTrue(os.path.isfile(os.path.join(self.project_dir, self.doc_path, '{}.txt'.format(self.project))))
-        self.assertTrue(os.path.isfile(os.path.join(self.project_dir, self.plugin_path, '{}.vim'.format(self.project))))
+        self.assertTrue(os.path.exists(os.path.join(project_dir, autoload_path)))
+        self.assertTrue(os.path.exists(os.path.join(project_dir, doc_path)))
+        self.assertTrue(os.path.exists(os.path.join(project_dir, plugin_path)))
 
-        shutil.rmtree(self.project_dir)
+        self.assertTrue(os.path.isfile(os.path.join(project_dir, autoload_path, '{}.vim'.format(project))))
+        self.assertTrue(os.path.isfile(os.path.join(project_dir, doc_path, '{}.txt'.format(project))))
+        self.assertTrue(os.path.isfile(os.path.join(project_dir, plugin_path, '{}.vim'.format(project))))
+
+        shutil.rmtree(project_dir)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

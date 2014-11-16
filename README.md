@@ -6,9 +6,15 @@ REALLY JUST make minimum environment for Vim script.
 
 `vimix` requires python3.3+
 
+#Install
+
+`pip install vimix`
+
 #Usage
 
-Run `vimix {project name}` command.
+Now, you are provided `vimix` command.
+
+Try `vimix {project name}`.
 
 ```
 $vimix hoge

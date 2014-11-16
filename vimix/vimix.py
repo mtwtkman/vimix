@@ -10,18 +10,25 @@ sys.path.append(vimix_dir)
 DARKGREEN = '\033[32m'
 GREEN = '\033[92m'
 
+class ProjectExistsError(FileExistsError):
+    pass
+
 def vimix(project, prefix='vim-', suffix=''):
     root_dir = prefix + project + suffix
     base_dirs = {d: os.path.join(os.getcwd(), root_dir, d) for d in ['autoload', 'doc', 'plugin']}
-    _make_dirs(base_dirs)
+    _make_dirs(root_dir, base_dirs)
     _make_readme(root_dir)
     _make_gitignore(root_dir)
     _make_doc(project, base_dirs['doc'])
     _make_plugin(project, base_dirs['plugin'])
     _make_autoload(project, base_dirs['autoload'])
 
-def _make_dirs(base_dirs):
-    [os.makedirs(d) for d in base_dirs.values()]
+def _make_dirs(root_dir, base_dirs):
+    try:
+        [os.makedirs(d) for d in base_dirs.values()]
+    except FileExistsError:
+        print('{} is exists.'.format(root_dir))
+        sys.exit(0)
 
 def _make_readme(root):
     print(DARKGREEN+'*creating', GREEN+'README.md')
@@ -32,7 +39,7 @@ def _make_gitignore(root):
     os.makedirs(os.path.join(root, '.gitignore'))
 
 def _make_doc(project, doc_path):
-    template_path = os.path.join(vimix_dir, 'templates', 'doc.txt')
+    template_path = os.path.join(os.path.dirname(__file__), 'templates', 'doc.txt')
 
     with open(template_path, 'r') as f:
         template = ''.join(f.readlines()).format(plugin_name=project, borderline='='*78)
@@ -42,7 +49,7 @@ def _make_doc(project, doc_path):
         f.write(template)
 
 def _make_plugin(project, plugin_path):
-    template_path = os.path.join(vimix_dir, 'templates', 'plugin.txt')
+    template_path = os.path.join(os.path.dirname(__file__), 'templates', 'plugin.txt')
 
     with open(template_path, 'r') as f:
         template = ''.join(f.readlines()).format(plugin_name=project)
@@ -52,7 +59,7 @@ def _make_plugin(project, plugin_path):
         f.write(template)
 
 def _make_autoload(project, autoload_path):
-    template_path = os.path.join(vimix_dir, 'templates', 'autoload.txt')
+    template_path = os.path.join(os.path.dirname(__file__), 'templates', 'autoload.txt')
 
     with open(template_path, 'r') as f:
         template = ''.join(f.readlines())

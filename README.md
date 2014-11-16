@@ -33,7 +33,7 @@ vim-hoge
     └── hoge.vim
 ```
 
-You can give prefix and suffix for project name with command option.
+You can give prefix and suffix for project root directory with command option.
 By default, prefix is 'vim-', suffix is nothing.
 
 ```

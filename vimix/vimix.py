@@ -10,9 +10,6 @@ sys.path.append(vimix_dir)
 DARKGREEN = '\033[32m'
 GREEN = '\033[92m'
 
-class ProjectExistsError(FileExistsError):
-    pass
-
 def vimix(project, prefix='vim-', suffix=''):
     root_dir = prefix + project + suffix
     base_dirs = {d: os.path.join(os.getcwd(), root_dir, d) for d in ['autoload', 'doc', 'plugin']}
